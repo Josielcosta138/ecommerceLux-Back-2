@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.*;
 
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
@@ -19,6 +20,15 @@ public class Produto {
     @Column(nullable = false)
     private Double preco;
 
+    @Column(nullable = false)
+    private String descricao;
+
+    @Column(nullable = false, length = 3, columnDefinition = "varchar(3) default 'P'")
+    @Size(min = 1, max = 3)
+    private String tamanho;
+
+    @Column(nullable = false, unique = true)
+    private String codigo;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -30,6 +40,29 @@ public class Produto {
     @OneToMany(mappedBy = "produto")
     private List<ProdutoEstoque> produtoEstoques;
 
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public String getTamanho() {
+        return tamanho;
+    }
+
+    public void setTamanho(String tamanho) {
+        this.tamanho = tamanho;
+    }
 
     @JsonIgnore
     public List<ProdutoEstoque> getProdutoEstoques() {

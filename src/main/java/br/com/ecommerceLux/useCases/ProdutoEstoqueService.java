@@ -1,13 +1,16 @@
 package br.com.ecommerceLux.useCases;
 
+import br.com.ecommerceLux.entitys.Produto;
 import br.com.ecommerceLux.entitys.ProdutoEstoque;
 import br.com.ecommerceLux.repositorys.ProdutoEstoqueRepository;
+import br.com.ecommerceLux.repositorys.ProdutoEstoqueUnicoRepository;
 import br.com.ecommerceLux.repositorys.ProdutoRepository;
 import br.com.ecommerceLux.useCases.produtoEstoque.domains.ProdutoEstoque.ProdutoEstoqueRequestDom;
 import br.com.ecommerceLux.useCases.produtoEstoque.domains.ProdutoEstoque.ProdutoEstoqueResponseDom;
 import br.com.ecommerceLux.utils.CrudException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +21,8 @@ public class ProdutoEstoqueService {
 
     @Autowired
     private ProdutoEstoqueRepository produtoEstoqueRepository;
+    @Autowired
+    private ProdutoEstoqueUnicoRepository produtoEstoqueUnicoRepository;
     @Autowired
     private ProdutoRepository produtoRepository;
     public List<ProdutoEstoqueResponseDom> carregarProdutoSestoque() {
@@ -39,6 +44,28 @@ public class ProdutoEstoqueService {
         return listaDeProdutos;
     }
 
+
+    // -- Carregar produto estoque por id do produto
+    public ProdutoEstoqueResponseDom carregarProdutosEstoqueByIdProduto(Long idProduto) {
+
+        Optional<ProdutoEstoque> resultadoProdutosEstoque = produtoEstoqueUnicoRepository.findByProdutoId(idProduto);
+
+        if (resultadoProdutosEstoque.isPresent()) {
+            ProdutoEstoque produtoEstoque = resultadoProdutosEstoque.get();
+
+            ProdutoEstoqueResponseDom responseDom = new ProdutoEstoqueResponseDom();
+            responseDom.setId(produtoEstoque.getId());
+            responseDom.setQuantidade(produtoEstoque.getQuantidade());
+            responseDom.setLocalizacao(produtoEstoque.getLocalizacao());
+            responseDom.setProduto_id(produtoEstoque.getProduto());
+
+            return responseDom;
+        }
+
+        return null;
+    }
+
+
     public ProdutoEstoqueResponseDom carregarProdutosEstoqueById(Long id) {
 
         Optional<ProdutoEstoque> resultado = produtoEstoqueRepository.findById(id);
@@ -58,6 +85,11 @@ public class ProdutoEstoqueService {
         return null;
 
     }
+
+
+
+
+
 
     public ProdutoEstoqueResponseDom criarProdutoEstoque(ProdutoEstoqueRequestDom produtoEstoque) throws CrudException {
         List<String> mensagens = this.validarProdutoEstoque(produtoEstoque);
