@@ -51,10 +51,12 @@ public List<ProdutoResponseDom> carregarProdutosCategoria() {
 
         if (resultadoProdDom.getCategoria().equals(Categoria.ACESSORIOS)){
             ProdutoResponseDom aux = new ProdutoResponseDom();
+            aux.setCodigo(resultadoProdDom.getCodigo());
             aux.setId(resultadoProdDom.getId());
             aux.setNome(resultadoProdDom.getNome());
             aux.setPreco(resultadoProdDom.getPreco());
             aux.setCategoria(resultadoProdDom.getCategoria());
+            aux.setTamanho(resultadoProdDom.getTamanho());
             produtosDom.add(aux);
         }
 
@@ -72,9 +74,13 @@ public List<ProdutoResponseDom> carregarProdutosCategoria() {
             ProdutoResponseDom responseDom = new ProdutoResponseDom();
 
             responseDom.setId(produto.getId());
+            responseDom.setCodigo(produto.getCodigo());
             responseDom.setNome(produto.getNome());
             responseDom.setCategoria(produto.getCategoria());
             responseDom.setPreco(produto.getPreco());
+            responseDom.setTamanho(produto.getTamanho());
+            responseDom.setDescricao(produto.getDescricao());
+
             return responseDom;
 
         }

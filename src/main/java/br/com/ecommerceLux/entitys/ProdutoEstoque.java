@@ -53,4 +53,5 @@ public class ProdutoEstoque {
     public void setLocalizacao(String localizacao) {
         this.localizacao = localizacao;
     }
+
 }

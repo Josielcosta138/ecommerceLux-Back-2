@@ -1,6 +1,8 @@
 package br.com.ecommerceLux.controllers;
 
 
+import br.com.ecommerceLux.entitys.Produto;
+import br.com.ecommerceLux.entitys.ProdutoEstoque;
 import br.com.ecommerceLux.useCases.ProdutoEstoqueService;
 import br.com.ecommerceLux.useCases.ProdutoService;
 import br.com.ecommerceLux.useCases.produtoEstoque.domains.ProdutoEstoque.ProdutoEstoqueRequestDom;
@@ -13,7 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin
 @Controller
 @RequestMapping("/ecommerce/produtosestoque")
 public class ProdutoEstoqueController {
@@ -47,7 +49,6 @@ public class ProdutoEstoqueController {
         }
     }
 
-
     @GetMapping("/carregar/{id}")
     public ResponseEntity<ProdutoEstoqueResponseDom> carregarProdutoEstoqueById(@PathVariable Long id){
         try {
@@ -68,6 +69,26 @@ public class ProdutoEstoqueController {
                         .body(null);
         }
     }
+
+
+    @GetMapping("/carregarProdutoEstoqueIdProduto/{id}")
+    public ResponseEntity<ProdutoEstoqueResponseDom> carregarProdutosEstByIdProd(@PathVariable Long id) {
+        try {
+            ProdutoEstoqueResponseDom responseDom = produtoEstoqueService.carregarProdutosEstoqueByIdProduto(id);
+            if (responseDom != null) {
+                return ResponseEntity.ok(responseDom);
+            }
+
+            return ResponseEntity.status(204).body(null); // No Content
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
+
+
+
 
 
     @CrossOrigin
