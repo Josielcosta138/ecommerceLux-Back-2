@@ -34,7 +34,6 @@ public class ProdutoService {
             aux.setNome(resultadoProdDom.getNome());
             aux.setPreco(resultadoProdDom.getPreco());
             aux.setCategoria(resultadoProdDom.getCategoria());
-//            aux.setProdutoEstoques(resultadoProdDom.getProdutoEstoques());
             produtosDom.add(aux);
 
         }
@@ -57,6 +56,7 @@ public List<ProdutoResponseDom> carregarProdutosCategoria() {
             aux.setPreco(resultadoProdDom.getPreco());
             aux.setCategoria(resultadoProdDom.getCategoria());
             aux.setTamanho(resultadoProdDom.getTamanho());
+            aux.setEnderecoImagem(resultadoProdDom.getEnderecoImagem());
             produtosDom.add(aux);
         }
 
@@ -80,6 +80,7 @@ public List<ProdutoResponseDom> carregarProdutosCategoria() {
             responseDom.setPreco(produto.getPreco());
             responseDom.setTamanho(produto.getTamanho());
             responseDom.setDescricao(produto.getDescricao());
+            responseDom.setEnderecoImagem(produto.getEnderecoImagem());
 
             return responseDom;
 

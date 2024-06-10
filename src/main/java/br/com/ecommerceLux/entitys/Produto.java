@@ -37,8 +37,19 @@ public class Produto {
     @OneToMany(mappedBy = "produto")
     private List<PedidoVendaItem> pedidoVendaItens;
 
+    @Column(nullable = true)
+    private String enderecoImagem;
+
     @OneToMany(mappedBy = "produto")
     private List<ProdutoEstoque> produtoEstoques;
+
+    public String getEnderecoImagem() {
+        return enderecoImagem;
+    }
+
+    public void setEnderecoImagem(String enderecoImagem) {
+        this.enderecoImagem = enderecoImagem;
+    }
 
     public String getCodigo() {
         return codigo;
