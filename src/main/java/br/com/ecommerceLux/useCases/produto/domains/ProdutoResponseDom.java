@@ -3,10 +3,8 @@ package br.com.ecommerceLux.useCases.produto.domains;
 import br.com.ecommerceLux.entitys.Categoria;
 import br.com.ecommerceLux.entitys.PedidoVendaItem;
 import br.com.ecommerceLux.entitys.ProdutoEstoque;
-import jakarta.persistence.Column;
 
 import java.util.List;
-import java.util.Map;
 
 public class ProdutoResponseDom {
 
@@ -19,6 +17,16 @@ public class ProdutoResponseDom {
     private String codigo;
     private List<PedidoVendaItem> pedidoVendaItens;
     private List<ProdutoEstoque> produtoEstoques;
+    private String enderecoImagem;
+
+
+    public String getEnderecoImagem() {
+        return enderecoImagem;
+    }
+
+    public void setEnderecoImagem(String enderecoImagem) {
+        this.enderecoImagem = enderecoImagem;
+    }
 
     public String getCodigo() {
         return codigo;
