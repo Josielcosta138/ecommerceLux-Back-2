@@ -20,13 +20,13 @@ public class Produto {
     @Column(nullable = false)
     private Double preco;
 
-    @Column(nullable = false)
+
+    @Column(nullable = false, columnDefinition = "varchar(255) defautl 'Teste'") // columnDefinition
     private String descricao;
 
     @Column(nullable = false, length = 3, columnDefinition = "varchar(3) default 'P'")
     @Size(min = 1, max = 3)
     private String tamanho;
-
     @Column(nullable = false, unique = true)
     private String codigo;
 
@@ -37,7 +37,7 @@ public class Produto {
     @OneToMany(mappedBy = "produto")
     private List<PedidoVendaItem> pedidoVendaItens;
 
-    @Column(nullable = true)
+    @Column(nullable = true, columnDefinition = "varchar(255) default'imagensProdutos/conjuntoTermico.jpg'")
     private String enderecoImagem;
 
     @OneToMany(mappedBy = "produto")
