@@ -1,5 +1,7 @@
 package br.com.ecommerceLux.entitys;
 
+import br.com.ecommerceLux.useCases.pedidoVendaItem.domains.PedidoVendaItemResponseDom;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.*;
 
@@ -25,51 +27,35 @@ public class PedidoVenda {
     @ManyToOne
     @JoinColumn(name = "clientes_id", nullable = false)
     private Clientes clientes;
-
-    @OneToOne
+    @ManyToOne //alterado
     @JoinColumn(name = "endereco_id", nullable = false)
     private Endereco endereco;
 
-    @OneToOne
-    @JoinColumn(name = "pedido_venda_item_id", nullable = false)
-    private PedidoVendaItem pedidoVendaItem;
+//    @OneToMany
+//    @JoinColumn(name = "pedido_venda_item_id", nullable = false)
+//    private PedidoVendaItem pedidoVendaItem;
 
-    @OneToOne
+    @OneToMany(mappedBy = "pedidoVenda", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<PedidoVendaItem> pedidoVendaItens;
+
+    @ManyToOne //alterado
     @JoinColumn(name = "forma_pagto_id", nullable = false)
     private FormaPagamento formaPagamento;
 
     @OneToOne(mappedBy = "pedidoVenda")
     Boleto boleto;
-
     @OneToOne(mappedBy = "pedidoVenda")
     Pix pix;
-
     @OneToOne(mappedBy = "pedidoVenda")
     Cartao cartao;
 
 
-    public Pix getPix() {
-        return pix;
+    public List<PedidoVendaItem> getPedidoVendaItens() {
+        return pedidoVendaItens;
     }
 
-    public void setPix(Pix pix) {
-        this.pix = pix;
-    }
-
-    public Cartao getCartao() {
-        return cartao;
-    }
-
-    public void setCartao(Cartao cartao) {
-        this.cartao = cartao;
-    }
-
-    public Boleto getBoleto() {
-        return boleto;
-    }
-
-    public void setBoleto(Boleto boleto) {
-        this.boleto = boleto;
+    public void setPedidoVendaItens(List<PedidoVendaItem> pedidoVendaItens) {
+        this.pedidoVendaItens = pedidoVendaItens;
     }
 
     public Long getId() {
@@ -110,7 +96,9 @@ public class PedidoVenda {
 
     public void setClientes(Clientes clientes) {
         this.clientes = clientes;
+        this.id = clientes.getId();
     }
+
 
     public Endereco getEndereco() {
         return endereco;
@@ -120,13 +108,14 @@ public class PedidoVenda {
         this.endereco = endereco;
     }
 
-    public PedidoVendaItem getPedidoVendaItem() {
-        return pedidoVendaItem;
-    }
 
-    public void setPedidoVendaItem(PedidoVendaItem pedidoVendaItem) {
-        this.pedidoVendaItem = pedidoVendaItem;
-    }
+//    public PedidoVendaItem getPedidoVendaItem() {
+//        return pedidoVendaItem;
+//    }
+//
+//    public void setPedidoVendaItem(PedidoVendaItem pedidoVendaItem) {
+//        this.pedidoVendaItem = pedidoVendaItem;
+//    }
 
     public FormaPagamento getFormaPagamento() {
         return formaPagamento;
@@ -134,6 +123,37 @@ public class PedidoVenda {
 
     public void setFormaPagamento(FormaPagamento formaPagamento) {
         this.formaPagamento = formaPagamento;
+    }
+
+    @JsonIgnore
+    public Boleto getBoleto() {
+        return boleto;
+    }
+
+    public void setBoleto(Boleto boleto) {
+        this.boleto = boleto;
+    }
+
+    @JsonIgnore
+    public Pix getPix() {
+        return pix;
+    }
+
+    public void setPix(Pix pix) {
+        this.pix = pix;
+    }
+
+    @JsonIgnore
+    public Cartao getCartao() {
+        return cartao;
+    }
+
+    public void setCartao(Cartao cartao) {
+        this.cartao = cartao;
+    }
+
+    public void setPedidoVendaItem(List<PedidoVendaItemResponseDom> itensResponse) {
+
     }
 
 }

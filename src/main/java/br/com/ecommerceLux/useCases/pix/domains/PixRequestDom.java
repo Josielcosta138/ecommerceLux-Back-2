@@ -1,41 +1,17 @@
-package br.com.ecommerceLux.entitys;
+package br.com.ecommerceLux.useCases.pix.domains;
 
-import jakarta.persistence.*;
+import br.com.ecommerceLux.entitys.PedidoVenda;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-@Entity
-public class Pix {
+public class PixRequestDom {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column(nullable = false)
     private String chavePix;
-    @Column(nullable = false)
     private LocalDate dataTransacao;
-    @Column(nullable = false)
     private BigDecimal valorTransacao;
-    @ManyToOne
-    @JoinColumn(name = "pedido_venda_id", nullable = false)
     PedidoVenda pedidoVenda;
-
-    public PedidoVenda getPedidoVenda() {
-        return pedidoVenda;
-    }
-
-    public void setPedidoVenda(PedidoVenda pedidoVenda) {
-        this.pedidoVenda = pedidoVenda;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    private Long pedido_venda_id;
 
     public String getChavePix() {
         return chavePix;
@@ -59,5 +35,21 @@ public class Pix {
 
     public void setValorTransacao(BigDecimal valorTransacao) {
         this.valorTransacao = valorTransacao;
+    }
+
+    public PedidoVenda getPedidoVenda() {
+        return pedidoVenda;
+    }
+
+    public void setPedidoVenda(PedidoVenda pedidoVenda) {
+        this.pedidoVenda = pedidoVenda;
+    }
+
+    public Long getPedido_venda_id() {
+        return pedido_venda_id;
+    }
+
+    public void setPedido_venda_id(Long pedido_venda_id) {
+        this.pedido_venda_id = pedido_venda_id;
     }
 }

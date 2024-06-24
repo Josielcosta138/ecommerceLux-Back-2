@@ -34,6 +34,7 @@ public class ProdutoService {
             aux.setNome(resultadoProdDom.getNome());
             aux.setPreco(resultadoProdDom.getPreco());
             aux.setCategoria(resultadoProdDom.getCategoria());
+            aux.setEnderecoImagem(resultadoProdDom.getEnderecoImagem());
             produtosDom.add(aux);
 
         }

@@ -1,40 +1,14 @@
-package br.com.ecommerceLux.entitys;
+package br.com.ecommerceLux.useCases.pedidoVendaItem.domains;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Entity;
-import jakarta.persistence.*;
+import br.com.ecommerceLux.entitys.PedidoVenda;
+import br.com.ecommerceLux.entitys.Produto;
 
-import java.util.List;
+public class PedidoVendaItemRequestDom {
 
-@Entity
-public class PedidoVendaItem {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @ManyToOne
-    @JoinColumn(name = "pedido_venda_id", nullable = false)
-    @JsonIgnore
-    PedidoVenda pedidoVenda;
-
-    @ManyToOne
-    @JoinColumn(name = "produto_id", nullable = false)
+    private PedidoVenda pedidoVenda;
     private Produto produto;
-
-    @Column(nullable = false)
     private Integer quantidade;
-
-    @Column(nullable = false)
     private Double preco;
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public PedidoVenda getPedidoVenda() {
         return pedidoVenda;

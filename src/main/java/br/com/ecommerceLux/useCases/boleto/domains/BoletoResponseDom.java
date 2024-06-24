@@ -1,36 +1,27 @@
-package br.com.ecommerceLux.entitys;
+package br.com.ecommerceLux.useCases.boleto.domains;
 
+import br.com.ecommerceLux.entitys.PedidoVenda;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-@Entity
+public class BoletoResponseDom {
 
-public class Boleto  {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false)
     private String codigoBarras;
-    @Column(nullable = false)
     private LocalDate dataVencimento;
-    @Column(nullable = false)
     private BigDecimal valor;
-
-    @ManyToOne
-    @JoinColumn(name = "pedido_venda_id", nullable = false)
     PedidoVenda pedidoVenda;
-
-
-    public PedidoVenda getPedidoVenda() {
-        return pedidoVenda;
+    private Long pedido_venda_id;
+    public Long getPedido_venda_id() {
+        return pedido_venda_id;
     }
 
-    public void setPedidoVenda(PedidoVenda pedidoVenda) {
-        this.pedidoVenda = pedidoVenda;
+
+
+    public void setPedido_venda_id(Long pedido_venda_id) {
+        this.pedido_venda_id = pedido_venda_id;
     }
 
     public Long getId() {
@@ -64,6 +55,18 @@ public class Boleto  {
     public void setValor(BigDecimal valor) {
         this.valor = valor;
     }
+
+
+    public PedidoVenda getPedidoVenda() {
+        return pedidoVenda;
+    }
+
+
+    @JsonIgnore
+    public void setPedidoVenda(PedidoVenda pedidoVenda) {
+        this.pedidoVenda = pedidoVenda;
+    }
+
 
 
 }

@@ -35,6 +35,7 @@ public class Produto {
     private Categoria categoria;
 
     @OneToMany(mappedBy = "produto")
+    @JsonIgnore
     private List<PedidoVendaItem> pedidoVendaItens;
 
     @Column(nullable = true, columnDefinition = "varchar(255) default'imagensProdutos/conjuntoTermico.jpg'")
