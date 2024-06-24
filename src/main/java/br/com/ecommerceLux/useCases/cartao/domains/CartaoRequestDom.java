@@ -1,41 +1,19 @@
-package br.com.ecommerceLux.entitys;
+package br.com.ecommerceLux.useCases.cartao.domains;
 
-import jakarta.persistence.*;
-import org.springframework.cglib.core.Local;
+import br.com.ecommerceLux.entitys.PedidoVenda;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-@Entity
-public class Cartao {
+public class CartaoRequestDom {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column(nullable = false)
     private int numeroCartao;
-    @Column(nullable = false)
     private String nomeTitular;
-    @Column(nullable = false)
     private LocalDate validade;
-    @Column(nullable = false)
     private String cvv;
-
-    @Column(nullable = false)
+    private PedidoVenda pedidoVenda;
+    private Long pedido_venda_id;
     private BigDecimal valor;
-
-    @ManyToOne
-    @JoinColumn(name = "pedido_venda_id", nullable = false)
-    PedidoVenda pedidoVenda;
-
-
-    public PedidoVenda getPedidoVenda() {
-        return pedidoVenda;
-    }
-
-    public void setPedidoVenda(PedidoVenda pedidoVenda) {
-        this.pedidoVenda = pedidoVenda;
-    }
 
     public BigDecimal getValor() {
         return valor;
@@ -45,13 +23,12 @@ public class Cartao {
         this.valor = valor;
     }
 
-
-    public Long getId() {
-        return id;
+    public Long getPedido_venda_id() {
+        return pedido_venda_id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setPedido_venda_id(Long pedido_venda_id) {
+        this.pedido_venda_id = pedido_venda_id;
     }
 
     public int getNumeroCartao() {
@@ -84,5 +61,13 @@ public class Cartao {
 
     public void setCvv(String cvv) {
         this.cvv = cvv;
+    }
+
+    public PedidoVenda getPedidoVenda() {
+        return pedidoVenda;
+    }
+
+    public void setPedidoVenda(PedidoVenda pedidoVenda) {
+        this.pedidoVenda = pedidoVenda;
     }
 }

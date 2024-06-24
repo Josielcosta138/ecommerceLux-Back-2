@@ -87,6 +87,7 @@ public class EnderecoService {
 
 
     public EnderecoResponseDom criarEndereco(EnderecoRequestDom endereco) throws CrudException {
+
         List<String>mensagens = this.validarEndereco(endereco);
         if (!mensagens.isEmpty()){
             throw new CrudException(mensagens);

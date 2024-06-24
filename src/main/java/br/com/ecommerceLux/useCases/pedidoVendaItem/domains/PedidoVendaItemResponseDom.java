@@ -1,32 +1,24 @@
-package br.com.ecommerceLux.entitys;
+package br.com.ecommerceLux.useCases.pedidoVendaItem.domains;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Entity;
-import jakarta.persistence.*;
+import br.com.ecommerceLux.entitys.PedidoVenda;
+import br.com.ecommerceLux.entitys.Produto;
 
-import java.util.List;
-
-@Entity
-public class PedidoVendaItem {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class PedidoVendaItemResponseDom {
     private Long id;
-    @ManyToOne
-    @JoinColumn(name = "pedido_venda_id", nullable = false)
-    @JsonIgnore
-    PedidoVenda pedidoVenda;
-
-    @ManyToOne
-    @JoinColumn(name = "produto_id", nullable = false)
+    private PedidoVenda pedidoVenda;
     private Produto produto;
-
-    @Column(nullable = false)
     private Integer quantidade;
-
-    @Column(nullable = false)
     private Double preco;
 
+    private long pedidoVendaId;
+
+    public long getPedidoVendaId() {
+        return pedidoVendaId;
+    }
+
+    public void setPedidoVendaId(long pedidoVendaId) {
+        this.pedidoVendaId = pedidoVendaId;
+    }
 
     public Long getId() {
         return id;
@@ -67,4 +59,7 @@ public class PedidoVendaItem {
     public void setPreco(Double preco) {
         this.preco = preco;
     }
+
+//    public void setPedidoVendaId(Long pedidoVendaId) {
+//    }
 }

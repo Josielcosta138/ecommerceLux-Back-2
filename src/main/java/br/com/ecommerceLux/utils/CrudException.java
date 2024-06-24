@@ -15,6 +15,7 @@ public class CrudException extends Exception{
         this.messageList = mensagens;
     }
 
+
     public List<String> getMessages(){
         if (messageList.isEmpty()){
             messageList.add(super.getMessage());
