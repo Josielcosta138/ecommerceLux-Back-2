@@ -31,10 +31,6 @@ public class PedidoVenda {
     @JoinColumn(name = "endereco_id", nullable = false)
     private Endereco endereco;
 
-//    @OneToMany
-//    @JoinColumn(name = "pedido_venda_item_id", nullable = false)
-//    private PedidoVendaItem pedidoVendaItem;
-
     @OneToMany(mappedBy = "pedidoVenda", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<PedidoVendaItem> pedidoVendaItens;
 
