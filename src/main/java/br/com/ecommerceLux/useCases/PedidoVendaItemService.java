@@ -3,11 +3,14 @@ package br.com.ecommerceLux.useCases;
 import br.com.ecommerceLux.entitys.PedidoVenda;
 import br.com.ecommerceLux.entitys.PedidoVendaItem;
 import br.com.ecommerceLux.entitys.Produto;
+import br.com.ecommerceLux.entitys.ProdutoEstoque;
 import br.com.ecommerceLux.repositorys.PedidoVendaItemRepository;
 import br.com.ecommerceLux.repositorys.PedidoVendaRepository;
+import br.com.ecommerceLux.repositorys.ProdutoEstoqueRepository;
 import br.com.ecommerceLux.repositorys.ProdutoRepository;
 import br.com.ecommerceLux.useCases.pedidoVendaItem.domains.PedidoVendaItemRequestDom;
 import br.com.ecommerceLux.useCases.pedidoVendaItem.domains.PedidoVendaItemResponseDom;
+import br.com.ecommerceLux.useCases.produto.domains.ProdutoRequestDom;
 import br.com.ecommerceLux.utils.CrudException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +32,9 @@ public class PedidoVendaItemService {
     @Autowired
     private ProdutoRepository produtoRepository;
 
+    @Autowired
+    private ProdutoEstoqueRepository produtoEstoqueRepository;
+
 
 
     public List<PedidoVendaItemResponseDom> criarListaPedidoVendaItens(List<PedidoVendaItemRequestDom> itensRequest, Long pedidoVendaId) {
@@ -42,6 +48,24 @@ public class PedidoVendaItemService {
             if (!produtoOptional.isPresent()) {
                 throw new IllegalArgumentException("Produto não encontrado para o ID: " + itemRequest.getProduto().getId());
             }
+
+
+            Produto produto = produtoOptional.get();
+
+            ProdutoEstoque produtoEstoque = produtoEstoqueRepository.findByProdutoId(produto.getId());
+            if (produtoEstoque == null) {
+                throw new IllegalArgumentException("Estoque não encontrado para o produto ID: " + produto.getId());
+            }
+
+
+            if (produtoEstoque.getQuantidade() < itemRequest.getQuantidade()) {
+                throw new IllegalArgumentException("Quantidade insuficiente no estoque para o produto ID: " + produto.getId());
+            }
+
+
+            produtoEstoque.setQuantidade(produtoEstoque.getQuantidade() - itemRequest.getQuantidade());
+            produtoEstoqueRepository.save(produtoEstoque);
+
 
             // Configurar os dados do item de resposta
             itemResponse.setPedidoVendaId(pedidoVendaId);
@@ -58,12 +82,18 @@ public class PedidoVendaItemService {
 
             pedidoVendaItemRepository.save(itemEntidade);
 
+
+
             itensResponse.add(itemResponse);
         }
 
 
         return itensResponse;
     }
+
+
+
+
 
 
     public List<String> validarPedidoVendaItem(PedidoVendaItemRequestDom item) {
