@@ -1,10 +1,12 @@
     package br.com.ecommerceLux.controllers;
 
 import br.com.ecommerceLux.useCases.ClienteService;
+import br.com.ecommerceLux.useCases.clientes.domains.ClientesRequestDom;
 import br.com.ecommerceLux.useCases.clientes.domains.ClientesResponseDom;
 import br.com.ecommerceLux.utils.CrudException;
 import br.com.ecommerceLux.utils.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -68,6 +70,21 @@ public class ClienteController {
             return ResponseEntity.internalServerError().body(ResponseUtil.responseMap("Erro não mapeado"+ e.getMessage()));
         }
     }
+
+
+    @PostMapping("/autenticar")
+    public ResponseEntity<?> autenticarCliente(@RequestBody ClientesRequestDom request) {
+        try {
+            ClientesResponseDom response = clienteService.autenticarCliente(request.getEmail(), request.getSenha());
+            return ResponseEntity.ok(response);
+        } catch (CrudException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ResponseUtil.responseMap(e.getMessages()));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body(ResponseUtil.responseMap("Erro não mapeado: " + e.getMessage()));
+        }
+    }
+
 
 
 

@@ -53,21 +53,21 @@ public class PedidoVendaItemService {
             Produto produto = produtoOptional.get();
 
             ProdutoEstoque produtoEstoque = produtoEstoqueRepository.findByProdutoId(produto.getId());
-            if (produtoEstoque == null) {
-                throw new IllegalArgumentException("Estoque não encontrado para o produto ID: " + produto.getId());
-            }
+                if (produtoEstoque == null) {
+                    throw new IllegalArgumentException("Estoque não encontrado para o produto ID: " + produto.getId());
+                }
 
-
-            if (produtoEstoque.getQuantidade() < itemRequest.getQuantidade()) {
-                throw new IllegalArgumentException("Quantidade insuficiente no estoque para o produto ID: " + produto.getId());
-            }
+                //Baixa no estoque
+                if (produtoEstoque.getQuantidade() < itemRequest.getQuantidade()) {
+                    throw new IllegalArgumentException("Quantidade insuficiente no estoque para o produto ID: " + produto.getId());
+                }
 
 
             produtoEstoque.setQuantidade(produtoEstoque.getQuantidade() - itemRequest.getQuantidade());
             produtoEstoqueRepository.save(produtoEstoque);
 
 
-            // Configurar os dados do item de resposta
+            // Response
             itemResponse.setPedidoVendaId(pedidoVendaId);
             itemResponse.setProduto(produtoOptional.get());
             itemResponse.setQuantidade(itemRequest.getQuantidade());

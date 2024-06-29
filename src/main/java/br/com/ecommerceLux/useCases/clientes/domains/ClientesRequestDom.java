@@ -20,10 +20,19 @@ public class ClientesRequestDom {
 
     private String documento;
 
+    private String senha;
     List<Endereco> enderecos;
 
     List<PedidoVenda> pedidoVendas;
 
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
 
     public String getNome() {
         return nome;

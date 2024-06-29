@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @CrossOrigin
+@RestController
 @Controller
 @RequestMapping("/ecommerce/pedidovenda")
 public class PedidoVendaController {
@@ -59,6 +60,25 @@ public class PedidoVendaController {
                 e.printStackTrace();
                 return ResponseEntity.badRequest().body(null);
             }
+    }
+
+
+
+    @GetMapping("/meuspedidos/carregar/{clienteId}")
+    public ResponseEntity<List<PedidoVendaResponseDom>> getPedidosByClienteId(@PathVariable Long clienteId) {
+        try {
+            List<PedidoVendaResponseDom> pedidos = pedidoVendaService.carregarMeusPedidoVendaById(clienteId);
+
+            if (pedidos.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+
+            return ResponseEntity.ok(pedidos);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(null);
+        }
     }
 
     @PostMapping("/criar")

@@ -29,6 +29,9 @@ public class Clientes {
     @OneToMany(mappedBy = "clientes")
     List<PedidoVenda> pedidoVendas;
 
+    @Column(nullable = false)
+    private String senha;
+
     public Long getId() {
         return id;
     }
@@ -84,5 +87,13 @@ public class Clientes {
 
     public void setEnderecos(List<Endereco> enderecos) {
         this.enderecos = enderecos;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 }
