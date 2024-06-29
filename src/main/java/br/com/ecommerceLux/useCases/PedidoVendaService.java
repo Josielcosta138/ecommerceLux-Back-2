@@ -6,7 +6,6 @@ import br.com.ecommerceLux.useCases.pedidoVenda.domains.PedidoVendaRequestDom;
 import br.com.ecommerceLux.useCases.pedidoVenda.domains.PedidoVendaResponseDom;
 import br.com.ecommerceLux.useCases.pedidoVendaItem.domains.PedidoVendaItemRequestDom;
 import br.com.ecommerceLux.useCases.pedidoVendaItem.domains.PedidoVendaItemResponseDom;
-import br.com.ecommerceLux.useCases.pix.domains.PixResponseDom;
 import br.com.ecommerceLux.utils.CrudException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,7 +32,10 @@ public class PedidoVendaService {
     private FormaPagamentoRepository formaPagamentoRepository;
 
     @Autowired
+    private MeusPedidoVendaRepository meusPedidoVendaRepository;
+    @Autowired
     private PedidoVendaItemService pedidoVendaItemService;
+
 
 
     public List<PedidoVendaResponseDom> carregarPedidosVenda() {
@@ -70,10 +72,47 @@ public class PedidoVendaService {
             responseDOM.setClientes(pedido.getClientes());
             responseDOM.setEndereco(pedido.getEndereco());
             responseDOM.setFormaPagamento(pedido.getFormaPagamento());
+
             return responseDOM;
         }
         return null;
     }
+
+
+    public List<PedidoVendaResponseDom> carregarMeusPedidoVendaById(Long clienteId) {
+        List<PedidoVenda> pedidos = meusPedidoVendaRepository.findByClientesId(clienteId);
+        List<PedidoVendaResponseDom> responseList = new ArrayList<>();
+
+        for (PedidoVenda pedido : pedidos) {
+            PedidoVendaResponseDom responseDOM = new PedidoVendaResponseDom();
+            responseDOM.setId(pedido.getId());
+            responseDOM.setDataPedido(pedido.getDataPedido());
+            responseDOM.setCliente(pedido.getCliente());
+            responseDOM.setTotalPedido(pedido.getTotalPedido());
+            responseDOM.setClientes(pedido.getClientes());
+            responseDOM.setEndereco(pedido.getEndereco());
+            responseDOM.setFormaPagamento(pedido.getFormaPagamento());
+
+            if (pedido.getPedidoVendaItens() != null) {
+                List<PedidoVendaItemResponseDom> itensPedidoResponse = new ArrayList<>();
+                for (PedidoVendaItem item : pedido.getPedidoVendaItens()) {
+                    PedidoVendaItemResponseDom itensresponseDom = new PedidoVendaItemResponseDom();
+                    itensresponseDom.setId(item.getId());
+                    itensresponseDom.setProduto(item.getProduto());
+                    itensresponseDom.setQuantidade(item.getQuantidade());
+                    itensresponseDom.setPreco(item.getPreco());
+                    itensPedidoResponse.add(itensresponseDom);
+                }
+                responseDOM.setItensPedido(itensPedidoResponse);
+            }
+
+            responseList.add(responseDOM);
+        }
+
+        return responseList;
+    }
+
+
 
 
     public PedidoVendaResponseDom criarPedidoVenda(PedidoVendaRequestDom pedidoRequest) throws CrudException {
@@ -119,6 +158,7 @@ public class PedidoVendaService {
                 valorTotalFinalCompra += listaItens.getPreco() * listaItens.getQuantidade();
             }
 
+
         pedidoEntidade.setTotalPedido(valorTotalFinalCompra);
         PedidoVenda resultadoResponse = pedidoVendaRepository.save(pedidoEntidade);
 
@@ -129,6 +169,7 @@ public class PedidoVendaService {
 
         resultadoResponse.setPedidoVendaItem(itensResponse);
         resultadoResponse = pedidoVendaRepository.save(resultadoResponse);
+
 
         // Retornar o response
         PedidoVendaResponseDom responseDOM = new PedidoVendaResponseDom();
@@ -143,9 +184,6 @@ public class PedidoVendaService {
 
         return responseDOM;
     }
-
-
-
 
 
 

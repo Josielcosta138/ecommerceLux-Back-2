@@ -36,6 +36,7 @@ public class ClienteService {
             aux.setDocumento(resultadoClientes.getDocumento());
             aux.setEmail(resultadoClientes.getEmail());
             aux.setDataNascimento(resultadoClientes.getDataNascimento());
+//            aux.setSenha(resultadoClientes.getSenha());
             clientes.add(aux);
         }
 
@@ -58,6 +59,7 @@ public class ClienteService {
             responseDOM.setDataNascimento(clientes.getDataNascimento());
             responseDOM.setDocumento(clientes.getDocumento());
             responseDOM.setSobrenome(clientes.getSobrenome());
+//            responseDOM.setSenha(clientes.getSenha());
             return responseDOM;
         }
         return null;
@@ -75,6 +77,7 @@ public class ClienteService {
         clientesEntidades.setDocumento(cliente.getDocumento());;
         clientesEntidades.setSobrenome(cliente.getSobrenome());
         clientesEntidades.setDataNascimento(cliente.getDataNascimento());
+        clientesEntidades.setSenha(cliente.getSenha());
         Clientes resultado = clientesRepository.save(clientesEntidades);
 
         ClientesResponseDom responseDOM = new ClientesResponseDom();
@@ -84,9 +87,30 @@ public class ClienteService {
         responseDOM.setEmail(resultado.getEmail());
         responseDOM.setDataNascimento(resultado.getDataNascimento());
         responseDOM.setDocumento(resultado.getDocumento());
+//        responseDOM.setSenha(resultado.getSenha());
 
         return responseDOM;
     }
+
+
+    public ClientesResponseDom autenticarCliente(String email, String senha) throws CrudException {
+        Optional<Clientes> clienteOptional = clientesRepository.findByEmail(email);
+
+        if (clienteOptional.isEmpty() || !clienteOptional.get().getSenha().equals(senha)) {
+            throw new CrudException(List.of("Usuário ou senha inválidos!"));
+        }
+
+        Clientes cliente = clienteOptional.get();
+        ClientesResponseDom response = new ClientesResponseDom();
+        response.setId(cliente.getId());
+        response.setNome(cliente.getNome());
+        response.setEmail(cliente.getEmail());
+        response.setDataNascimento(cliente.getDataNascimento());
+        response.setDocumento(cliente.getDocumento());
+        response.setSobrenome(cliente.getSobrenome());
+        return response;
+    }
+
 
 
     public ClientesResponseDom atualizarCliente(Long id, ClientesResponseDom cliente){
@@ -96,6 +120,7 @@ public class ClienteService {
             record.setEmail(cliente.getEmail());
             record.setDataNascimento(cliente.getDataNascimento());
             record.setDocumento(cliente.getDocumento());
+            record.setSenha(cliente.getSenha());
 
             return clientesRepository.save(record);
         });
@@ -110,6 +135,7 @@ public class ClienteService {
             responseDOM.setEmail(clientesEntidades.getEmail());
             responseDOM.setDataNascimento(clientesEntidades.getDataNascimento());
             responseDOM.setDocumento(clientesEntidades.getDocumento());
+//            responseDOM.setSenha(clientesEntidades.getSenha());
 
             return responseDOM;
         }
