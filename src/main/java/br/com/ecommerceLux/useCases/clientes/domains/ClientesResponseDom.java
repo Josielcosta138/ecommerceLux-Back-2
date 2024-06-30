@@ -2,6 +2,7 @@ package br.com.ecommerceLux.useCases.clientes.domains;
 
 import br.com.ecommerceLux.entitys.Endereco;
 import br.com.ecommerceLux.entitys.PedidoVenda;
+import br.com.ecommerceLux.useCases.endereco.domains.EnderecoResponseDom;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -20,6 +21,16 @@ public class ClientesResponseDom {
     private String documento;
 
     private String senha;
+
+    private List<EnderecoResponseDom> enderecos;
+
+    public List<EnderecoResponseDom> getEnderecos() {
+        return enderecos;
+    }
+
+    public void setEnderecos(List<EnderecoResponseDom> enderecos) {
+        this.enderecos = enderecos;
+    }
 
     public String getSenha() {
         return senha;

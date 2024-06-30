@@ -5,6 +5,7 @@ import br.com.ecommerceLux.entitys.Clientes;
 import br.com.ecommerceLux.repositorys.ClientesRepository;
 import br.com.ecommerceLux.repositorys.EnderecoRepository;
 import br.com.ecommerceLux.useCases.clientes.domains.ClientesResponseDom;
+import br.com.ecommerceLux.useCases.endereco.domains.EnderecoResponseDom;
 import br.com.ecommerceLux.utils.CrudException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,8 @@ public class ClienteService {
     private ClientesRepository clientesRepository;
     @Autowired
     private EnderecoRepository enderecoRepository;
+
+    private EnderecoService enderecoService;
 
 
     public List<ClientesResponseDom> carregarClientes() {
@@ -60,6 +63,7 @@ public class ClienteService {
             responseDOM.setDocumento(clientes.getDocumento());
             responseDOM.setSobrenome(clientes.getSobrenome());
 //            responseDOM.setSenha(clientes.getSenha());
+
             return responseDOM;
         }
         return null;
@@ -108,6 +112,9 @@ public class ClienteService {
         response.setDataNascimento(cliente.getDataNascimento());
         response.setDocumento(cliente.getDocumento());
         response.setSobrenome(cliente.getSobrenome());
+
+
+
         return response;
     }
 

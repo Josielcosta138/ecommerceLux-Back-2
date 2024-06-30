@@ -16,6 +16,16 @@ public class EnderecoResponseDom {
 
     private Clientes clientes_id;
 
+    private Long idCliente;
+
+    public Long getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(Long idCliente) {
+        this.idCliente = idCliente;
+    }
+
     public Long getId() {
         return id;
     }
