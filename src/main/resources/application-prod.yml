@@ -1,0 +1,7 @@
+server:
+  port : 8080
+spring:
+    datasource :
+      url: jdbc:postgresql://dpg-cq7gnq3v2p9s73c4con0-a:5432/prototipo_ecommerce_4qll
+      username: prototipo_ecommerce_4qll_user
+      password: l7GUho1RUnS0LaVIjDtkHpIIGMZ2jTBt
