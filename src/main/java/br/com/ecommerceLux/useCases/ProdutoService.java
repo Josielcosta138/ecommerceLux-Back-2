@@ -60,10 +60,80 @@ public List<ProdutoResponseDom> carregarProdutosCategoria() {
             aux.setEnderecoImagem(resultadoProdDom.getEnderecoImagem());
             produtosDom.add(aux);
         }
-
     }
     return produtosDom;
 }
+
+
+    public List<ProdutoResponseDom> carregarProdutosTodasCategoria(Long id) {
+
+        List<Produto> listaDeProdutos = produtoRepository.findAll();
+        List<ProdutoResponseDom> produtosDom = new ArrayList<>();
+
+        for (Produto resultadoProdDom : listaDeProdutos){
+
+            if (id == 1){
+                if (resultadoProdDom.getCategoria().equals(Categoria.CALCAS)){
+                    ProdutoResponseDom aux = new ProdutoResponseDom();
+                    aux.setCodigo(resultadoProdDom.getCodigo());
+                    aux.setId(resultadoProdDom.getId());
+                    aux.setNome(resultadoProdDom.getNome());
+                    aux.setPreco(resultadoProdDom.getPreco());
+                    aux.setCategoria(resultadoProdDom.getCategoria());
+                    aux.setTamanho(resultadoProdDom.getTamanho());
+                    aux.setEnderecoImagem(resultadoProdDom.getEnderecoImagem());
+                    produtosDom.add(aux);
+                }
+            }
+            else if (id == 2) {
+                if (resultadoProdDom.getCategoria().equals(Categoria.CAMISAS)){
+                    ProdutoResponseDom aux = new ProdutoResponseDom();
+                    aux.setCodigo(resultadoProdDom.getCodigo());
+                    aux.setId(resultadoProdDom.getId());
+                    aux.setNome(resultadoProdDom.getNome());
+                    aux.setPreco(resultadoProdDom.getPreco());
+                    aux.setCategoria(resultadoProdDom.getCategoria());
+                    aux.setTamanho(resultadoProdDom.getTamanho());
+                    aux.setEnderecoImagem(resultadoProdDom.getEnderecoImagem());
+                    produtosDom.add(aux);
+                }
+            }
+            else if (id == 3){
+                if (resultadoProdDom.getCategoria().equals(Categoria.JAQUETAS)){
+                    ProdutoResponseDom aux = new ProdutoResponseDom();
+                    aux.setCodigo(resultadoProdDom.getCodigo());
+                    aux.setId(resultadoProdDom.getId());
+                    aux.setNome(resultadoProdDom.getNome());
+                    aux.setPreco(resultadoProdDom.getPreco());
+                    aux.setCategoria(resultadoProdDom.getCategoria());
+                    aux.setTamanho(resultadoProdDom.getTamanho());
+                    aux.setEnderecoImagem(resultadoProdDom.getEnderecoImagem());
+                    produtosDom.add(aux);
+                }
+            }
+            else if (id == 4){
+                if (resultadoProdDom.getCategoria().equals(Categoria.ACESSORIOS)){
+                    ProdutoResponseDom aux = new ProdutoResponseDom();
+                    aux.setCodigo(resultadoProdDom.getCodigo());
+                    aux.setId(resultadoProdDom.getId());
+                    aux.setNome(resultadoProdDom.getNome());
+                    aux.setPreco(resultadoProdDom.getPreco());
+                    aux.setCategoria(resultadoProdDom.getCategoria());
+                    aux.setTamanho(resultadoProdDom.getTamanho());
+                    aux.setEnderecoImagem(resultadoProdDom.getEnderecoImagem());
+                    produtosDom.add(aux);
+                }
+            }
+
+        }
+
+        return produtosDom;
+    }
+
+
+
+
+
 
 
     public ProdutoResponseDom carregarProdutosById(Long id) {

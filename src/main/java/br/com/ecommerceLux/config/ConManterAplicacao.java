@@ -22,7 +22,7 @@ public class ConManterAplicacao {
     public void reportCurrentTime() {
 
         ResponseEntity<String> result
-                = restTemplate.getForEntity("https://protipo-ecommerce-api.onrender.com/produtos/", String.class);
+                = restTemplate.getForEntity("https://ecommercelux-back-2.onrender.com/ecommerce/produtos/carregar/categoriacombo", String.class);
 
         log.info("Response status: {}", result.getStatusCode());
         log.info("Response headers: {}", result.getHeaders());

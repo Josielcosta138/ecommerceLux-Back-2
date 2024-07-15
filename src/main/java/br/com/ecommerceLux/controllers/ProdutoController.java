@@ -56,6 +56,27 @@ public class ProdutoController {
     }
 
 
+
+
+    @GetMapping("/carregar/todascategoria/{id}")
+    public ResponseEntity<List<ProdutoResponseDom>> carregarProdutosTodasCategoria(@PathVariable Long id) {
+
+        try {
+            List<ProdutoResponseDom> response = produtoService.carregarProdutosTodasCategoria(id);
+
+            int status = 200;
+            if (response.isEmpty()) {
+                status = 204;
+            }
+            return ResponseEntity.status(status).body(response);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
+
+
     @GetMapping("/carregar/{id}")
     public ResponseEntity<ProdutoResponseDom> carregarProdutosPorId(@PathVariable Long id){
         try {
