@@ -132,7 +132,29 @@ public List<ProdutoResponseDom> carregarProdutosCategoria() {
 
 
 
+    public List<ProdutoResponseDom> carregarProdutosPorNome(String produtoNome) {
 
+        List<Produto> listaDeProdutos = produtoRepository.findAll();
+        List<ProdutoResponseDom> produtosDom = new ArrayList<>();
+
+        for (Produto resultadoProdDom : listaDeProdutos){
+
+            if ((resultadoProdDom.getDescricao().toLowerCase().contains(produtoNome.toLowerCase()))
+                    || (resultadoProdDom.getNome().toLowerCase().contains(produtoNome.toLowerCase()))){
+                ProdutoResponseDom aux = new ProdutoResponseDom();
+                aux.setCodigo(resultadoProdDom.getCodigo());
+                aux.setId(resultadoProdDom.getId());
+                aux.setNome(resultadoProdDom.getNome());
+                aux.setDescricao(resultadoProdDom.getDescricao());
+                aux.setPreco(resultadoProdDom.getPreco());
+                aux.setCategoria(resultadoProdDom.getCategoria());
+                aux.setTamanho(resultadoProdDom.getTamanho());
+                aux.setEnderecoImagem(resultadoProdDom.getEnderecoImagem());
+                produtosDom.add(aux);
+            }
+        }
+        return produtosDom;
+    }
 
 
 

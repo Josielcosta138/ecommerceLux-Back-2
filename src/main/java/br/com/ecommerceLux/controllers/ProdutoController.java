@@ -77,6 +77,30 @@ public class ProdutoController {
     }
 
 
+
+
+    @GetMapping("/carregar/filtrarprodutos/{produtoNome}")
+    public ResponseEntity<List<ProdutoResponseDom>> carregarProdutosPorNome(@PathVariable String produtoNome) {
+
+        try {
+            List<ProdutoResponseDom> response = produtoService.carregarProdutosPorNome(produtoNome);
+
+            int status = 200;
+            if (response.isEmpty()) {
+                status = 204;
+            }
+            return ResponseEntity.status(status).body(response);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
+
+
+
+
+
     @GetMapping("/carregar/{id}")
     public ResponseEntity<ProdutoResponseDom> carregarProdutosPorId(@PathVariable Long id){
         try {
